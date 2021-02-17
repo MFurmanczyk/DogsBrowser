@@ -2,4 +2,6 @@
     <string name="app_name">DogsBrowser</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading_data_error">Error during loading the data.</string>
+    <string name="dog_name">DogName</string>
 </resources>
