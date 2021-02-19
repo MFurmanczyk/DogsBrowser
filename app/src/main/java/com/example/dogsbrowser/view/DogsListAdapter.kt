@@ -5,9 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.dogsbrowser.R
 import com.example.dogsbrowser.databinding.ItemDogBinding
 import com.example.dogsbrowser.model.DogBreed
+import com.example.dogsbrowser.util.getProgressDrawable
+import com.example.dogsbrowser.util.loadImage
 
 class DogsListAdapter (val dogsList: ArrayList<DogBreed>): RecyclerView.Adapter<DogsListAdapter.DogViewHolder>() {
 
@@ -34,6 +37,7 @@ class DogsListAdapter (val dogsList: ArrayList<DogBreed>): RecyclerView.Adapter<
             holder.viewContainer.setOnClickListener {
                 Navigation.findNavController(it).navigate(ListFragmentDirections.actionDetailFragment())
             }
+        holder.binding.imageView.loadImage(dogsList[position].imageUrl, getProgressDrawable(holder.binding.imageView.context))
     }
 
     override fun getItemCount(): Int = dogsList.size

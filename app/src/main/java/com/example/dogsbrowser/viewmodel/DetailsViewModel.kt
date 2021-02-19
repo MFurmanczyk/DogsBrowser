@@ -11,8 +11,7 @@ class DetailsViewModel: ViewModel() {
     val dog: LiveData<DogBreed> get() = _dog
 
     fun setDog() {
-        val dog = DogBreed("1", "testTESTtest", "TestowyTest", "Test", "Test", "Test", "Test")
-        _dog.value = dog
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.dogsbrowser.view
 
 import android.icu.lang.UCharacter
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,6 +43,13 @@ class ListFragment : Fragment() {
         binding.dogsList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = dogsListAdapter
+        }
+
+        binding.refreshLayout.setOnRefreshListener {
+            binding.dogsList.visibility = View.GONE
+            binding.listError.visibility = View.GONE
+            viewModel.refresh()
+            binding.refreshLayout.isRefreshing = false
         }
 
         observeViewModel()
