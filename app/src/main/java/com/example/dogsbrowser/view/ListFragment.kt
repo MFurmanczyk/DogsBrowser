@@ -48,7 +48,7 @@ class ListFragment : Fragment() {
         binding.refreshLayout.setOnRefreshListener {
             binding.dogsList.visibility = View.GONE
             binding.listError.visibility = View.GONE
-            viewModel.refresh()
+            viewModel.forceRefreshCache()
             binding.refreshLayout.isRefreshing = false
         }
 

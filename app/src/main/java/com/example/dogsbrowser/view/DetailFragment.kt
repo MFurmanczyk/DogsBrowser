@@ -9,6 +9,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.dogsbrowser.R
 import com.example.dogsbrowser.databinding.FragmentDetailBinding
+import com.example.dogsbrowser.util.getProgressDrawable
+import com.example.dogsbrowser.util.loadImage
 import com.example.dogsbrowser.viewmodel.DetailsViewModel
 import java.util.*
 
@@ -41,10 +43,11 @@ class DetailFragment : Fragment() {
             dogUuid = DetailFragmentArgs.fromBundle(it).dogUuid
         }
 
-        viewModel.setDog()
-        observeViewModel()
-    }
+        viewModel.setDog(dogUuid)
 
+        observeViewModel()
+
+    }
 
     private fun observeViewModel() {
         viewModel.dog.observe(viewLifecycleOwner, {
@@ -53,6 +56,7 @@ class DetailFragment : Fragment() {
                 binding.dogLifespan.text = it.lifespan
                 binding.dogPurpose.text = it.bredFor
                 binding.dogTemperament.text = it.temperament
+                binding.dogImage.loadImage(it.imageUrl, getProgressDrawable(requireContext()))
             }
         })
     }
