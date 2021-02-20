@@ -3,6 +3,9 @@ package com.example.dogsbrowser.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.contentValuesOf
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -12,7 +15,7 @@ import com.example.dogsbrowser.model.DogBreed
 import com.example.dogsbrowser.util.getProgressDrawable
 import com.example.dogsbrowser.util.loadImage
 
-class DogsListAdapter (val dogsList: ArrayList<DogBreed>): RecyclerView.Adapter<DogsListAdapter.DogViewHolder>() {
+class DogsListAdapter (val dogsList: ArrayList<DogBreed>): RecyclerView.Adapter<DogsListAdapter.DogViewHolder>(), DogClickListener {
 
     class DogViewHolder(var viewContainer: View): RecyclerView.ViewHolder(viewContainer) {
 
@@ -32,15 +35,16 @@ class DogsListAdapter (val dogsList: ArrayList<DogBreed>): RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
-            holder.binding.dogName.text = dogsList[position].dogBreed
-            holder.binding.lifespan.text = dogsList[position].lifespan
-            holder.viewContainer.setOnClickListener {
-                val action = ListFragmentDirections.actionDetailFragment()
-                action.dogUuid = dogsList[position].uuid
-                Navigation.findNavController(it).navigate(action)
-            }
-        holder.binding.imageView.loadImage(dogsList[position].imageUrl, getProgressDrawable(holder.binding.imageView.context))
+        holder.binding.dog = dogsList[position]
+        holder.binding.listener = this
     }
 
     override fun getItemCount(): Int = dogsList.size
+
+    override fun onDogClicked(v: View, dogUuid: Int) {
+        val action = ListFragmentDirections.actionDetailFragment()
+        action.dogUuid = dogUuid
+        Navigation.findNavController(v).navigate(action)
+
+    }
 }
