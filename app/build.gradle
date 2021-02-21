@@ -16,7 +16,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -68,25 +68,36 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
 
+    //coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1"
 
+    //navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 
+    //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
 
+    //rxJava
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxJavaVersion"
 
+    //glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
 
+    //palette
     implementation "com.android.support:palette-v7:$supportVersion"
 
+    //preference
     implementation "androidx.preference:preference-ktx:$preferencesVersion"
 
-    testImplementation 'junit:junit:4.13.1'
+    implementation "com.google.firebase:firebase-core:18.0.2"
+
+    implementation "com.android.support:multidex:1.0.3"
+
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
