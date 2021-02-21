@@ -3,13 +3,12 @@ package com.example.dogsbrowser.view
 import android.icu.lang.UCharacter
 import android.opengl.Visibility
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dogsbrowser.R
 import com.example.dogsbrowser.databinding.FragmentListBinding
 import com.example.dogsbrowser.viewmodel.ListViewModel
 
@@ -32,6 +31,7 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentListBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -56,6 +56,23 @@ class ListFragment : Fragment() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.list_menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId) {
+            R.id.action_settings -> {
+                view?.let {
+                    Navigation.findNavController(it).navigate(ListFragmentDirections.actionSettingsFragment())
+                }
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun observeViewModel() {
         viewModel.dogs.observe(viewLifecycleOwner, {

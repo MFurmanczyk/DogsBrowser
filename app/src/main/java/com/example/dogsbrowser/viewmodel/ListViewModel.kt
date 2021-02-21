@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class ListViewModel(application: Application): BaseViewModel(application) {
 
     private var preferenceHelper = SharedPreferencesHelper(getApplication())
-    private val refreshTime = 5 /*min*/ * 60/*sec*/ * 1000/*ms*/ * 1000/*μs*/ * 1000L/*ns*/
+    private var refreshTime = 5 /*min*/ * 60/*sec*/ * 1000/*ms*/ * 1000/*μs*/ * 1000L/*ns*/
 
     private val dogsService = DogsApiService()
     private val disposable = CompositeDisposable()
@@ -36,6 +36,7 @@ class ListViewModel(application: Application): BaseViewModel(application) {
         get() = _loading
 
     fun refresh() {
+        checkCacheDuration()
         val updateTime = preferenceHelper.getCacheTime()
         if(updateTime != null  && updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
             fetchFromDatabase()
@@ -66,10 +67,8 @@ class ListViewModel(application: Application): BaseViewModel(application) {
                         _dogsLoadError.value = true
                         e.printStackTrace()
                     }
-
                 })
         )
-
     }
 
     private fun fetchFromDatabase() {
@@ -79,7 +78,6 @@ class ListViewModel(application: Application): BaseViewModel(application) {
             dogsRetrieved(dogs)
             Toast.makeText(getApplication(), "Dogs retrieved from database", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     private fun dogsRetrieved(dogsList: List<DogBreed>) {
@@ -103,6 +101,15 @@ class ListViewModel(application: Application): BaseViewModel(application) {
         preferenceHelper.saveCacheTime(System.nanoTime())
     }
 
+    private fun checkCacheDuration() {
+        val cachePreference = preferenceHelper.getCacheDuration()
+        try {
+            val cachePreferenceInt = cachePreference?.toInt() ?: 5 * 60
+            refreshTime = cachePreferenceInt.times( 1000/*ms*/ * 1000/*μs*/ * 1000L/*ns*/)
+        } catch (e: NumberFormatException) {
+            e.printStackTrace()
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()

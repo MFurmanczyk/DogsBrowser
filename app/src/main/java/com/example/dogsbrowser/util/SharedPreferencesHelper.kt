@@ -38,4 +38,6 @@ class SharedPreferencesHelper {
     }
 
     fun getCacheTime() = preferences?.getLong(CACHE_TIME, 0L)
+
+    fun getCacheDuration() = preferences?.getString("pref_cache_duration", "")
 }
