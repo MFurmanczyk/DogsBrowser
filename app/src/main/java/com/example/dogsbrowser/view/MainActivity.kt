@@ -1,19 +1,33 @@
 package com.example.dogsbrowser.view
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.dogsbrowser.R
+import com.example.dogsbrowser.databinding.ActivityMainBinding
+import com.example.dogsbrowser.util.PERMISSION_SEND_SMS
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+
+        setContentView(view)
 
         navController = Navigation.findNavController(this, R.id.fragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
@@ -21,5 +35,55 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, null)
+    }
+
+    fun checkSmsPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
+                AlertDialog.Builder(this)
+                    .setTitle("Send SMS permission")
+                    .setMessage("This app requires access to send an SMS.")
+                    .setPositiveButton("Ask me") { _, _ ->
+                        requestSmsPermission()
+                    }
+                    .setNegativeButton("Cancel") { _, _ ->
+                        notifyDetailFragment(false)
+                    }.show()
+            } else {
+                requestSmsPermission()
+            }
+        } else {
+            notifyDetailFragment(true)
+        }
+    }
+
+    private fun requestSmsPermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), PERMISSION_SEND_SMS)
+    }
+
+    private fun notifyDetailFragment(permissionGranted: Boolean) {
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragment)
+        val activeFragment = fragment?.let {
+            it.childFragmentManager.primaryNavigationFragment
+        }
+        if (activeFragment is DetailFragment) {
+            activeFragment.onPermissionResult(permissionGranted)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode) {
+            PERMISSION_SEND_SMS -> {
+                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    notifyDetailFragment(true)
+                } else {
+                    notifyDetailFragment(false)
+                }
+            }
+        }
     }
 }

@@ -8,4 +8,6 @@
     <string name="dog_temperament">Dog temperament</string>
     <string name="dog_lifespan">Dog lifespan</string>
     <string name="download_complete">Download complete</string>
+    <string name="send_sms">Send SMS</string>
+    <string name="share">Share</string>
 </resources>
