@@ -37,6 +37,7 @@ class NotificationsHelper(val context: Context) {
             )
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
             .build()
 
         NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)

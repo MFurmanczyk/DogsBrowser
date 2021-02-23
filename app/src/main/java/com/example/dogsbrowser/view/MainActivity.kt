@@ -7,10 +7,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.dogsbrowser.R
 import com.example.dogsbrowser.databinding.ActivityMainBinding
@@ -63,9 +61,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun notifyDetailFragment(permissionGranted: Boolean) {
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment)
-        val activeFragment = fragment?.let {
-            it.childFragmentManager.primaryNavigationFragment
-        }
+        val activeFragment = fragment?.childFragmentManager?.primaryNavigationFragment
         if (activeFragment is DetailFragment) {
             activeFragment.onPermissionResult(permissionGranted)
         }

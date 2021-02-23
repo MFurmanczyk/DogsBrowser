@@ -11,7 +11,6 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -22,16 +21,9 @@ import com.example.dogsbrowser.databinding.SendSmsDialogBinding
 import com.example.dogsbrowser.model.DogBreed
 import com.example.dogsbrowser.model.DogPalette
 import com.example.dogsbrowser.model.SMSInfo
-import com.example.dogsbrowser.util.getProgressDrawable
-import com.example.dogsbrowser.util.loadImage
 import com.example.dogsbrowser.viewmodel.DetailsViewModel
-import java.util.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class DetailFragment : Fragment() {
 
     private var dogUuid = 0
@@ -48,7 +40,7 @@ class DetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         setHasOptionsMenu(true)
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root

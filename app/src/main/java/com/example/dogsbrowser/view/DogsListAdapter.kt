@@ -3,19 +3,13 @@ package com.example.dogsbrowser.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.contentValuesOf
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.dogsbrowser.R
 import com.example.dogsbrowser.databinding.ItemDogBinding
 import com.example.dogsbrowser.model.DogBreed
-import com.example.dogsbrowser.util.getProgressDrawable
-import com.example.dogsbrowser.util.loadImage
 
-class DogsListAdapter (val dogsList: ArrayList<DogBreed>): RecyclerView.Adapter<DogsListAdapter.DogViewHolder>(), DogClickListener {
+class DogsListAdapter (private val dogsList: ArrayList<DogBreed>): RecyclerView.Adapter<DogsListAdapter.DogViewHolder>(), DogClickListener {
 
     class DogViewHolder(var viewContainer: View): RecyclerView.ViewHolder(viewContainer) {
 

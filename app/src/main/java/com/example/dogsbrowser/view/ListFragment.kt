@@ -1,7 +1,5 @@
 package com.example.dogsbrowser.view
 
-import android.icu.lang.UCharacter
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -12,11 +10,7 @@ import com.example.dogsbrowser.R
 import com.example.dogsbrowser.databinding.FragmentListBinding
 import com.example.dogsbrowser.viewmodel.ListViewModel
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class ListFragment : Fragment() {
 
     private var _binding: FragmentListBinding? = null
@@ -29,7 +23,7 @@ class ListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         return binding.root
